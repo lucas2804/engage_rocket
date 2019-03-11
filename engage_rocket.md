@@ -54,7 +54,10 @@ routes that can satisfy all of the requirements listed.
 ```ruby
 # config/routes.rb
 Belong::Engine.routes.draw do
-  # Add your routes here
+ # Add your routes here
+ #  Comment(id: integer, source_id: integer, source_type: string(Response), commenter_id: integer, body: text, created_at: datetime, updated_at: datetime, created_by: integer)
+ resources :comments, only: [:create, :update, :index]
+ resources :responses, only: [:mark_as_resolved]
 end
 ```
 
@@ -76,8 +79,24 @@ This week you are the Rocket Surgeon. You have just received a bug report in Sen
 How do you go about trouble shooting the issue? Depending on what you find, what will your next step be? When do you
 consider the issue "fixed"?
 
+- What I do next:
+    + mark jira ticket as in progress.
+    + re-produce this bug on production.
+    + write automation test which make this bug happen
+    + write code to pass this automation test
+    + push code to pre-production and double check with QA
+    + push code to production and verify on production 
+    + Mark jira ticket as 'fixed'
+    
 ## 4. Collaboration
 
 Assume you are working on building a new feature in the application, and you are facing some implementation issues.
 The new feature doesn't seem to go well together with the existing features, and more and more edge cases seem to
 appear as you go along. Describe, in as much detail as you like, how you would handle this situation.
+
+- How I handle this situation
+    + Write acceptance tests for old feature to make sure old feature works well.
+    + Write acceptance tests for new feature for each small release.
+    + Update all edge cases under unit-tests for performance.
+    + Write code until cover all of this edge cases.
+    + Run all acceptances tests of old feature and new feature to make sure all work well.
